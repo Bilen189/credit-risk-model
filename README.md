@@ -58,3 +58,4 @@ A more complex model such as Gradient Boosting or Random Forest may produce bett
 
 In a regulated credit risk context, the best approach is to compare both interpretable and high-performance models. The final model should balance accuracy, fairness, interpretability, and business usefulness.
 "@ | Set-Content README.md
+
