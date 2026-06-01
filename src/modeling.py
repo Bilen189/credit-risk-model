@@ -62,7 +62,7 @@ def train_logistic_regression(X_train, y_train):
     Train Logistic Regression model.
     """
     model = LogisticRegression(
-        max_iter=1000,
+        max_iter=3000,
         class_weight="balanced",
         random_state=42
     )
