@@ -1,0 +1,15 @@
+@"
+pandas
+numpy
+matplotlib
+seaborn
+scikit-learn
+xgboost
+mlflow
+fastapi
+uvicorn
+pydantic
+pytest
+flake8
+jupyter
+"@ | Set-Content requirements.txt
