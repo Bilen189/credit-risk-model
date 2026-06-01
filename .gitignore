@@ -11,3 +11,6 @@ __pycache__/
 venv/
 .ipynb_checkpoints/
 "@ | Set-Content .gitignore
+mlruns/
+mlartifacts/
+mlflow.db
