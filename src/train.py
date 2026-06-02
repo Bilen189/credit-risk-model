@@ -79,7 +79,11 @@ def train_and_log_model(model_name, model, params, X_train, X_test, y_train, y_t
 
         mlflow.log_params(grid_search.best_params_)
         mlflow.log_metrics(metrics)
-        mlflow.sklearn.log_model(best_model, artifact_path=model_name)
+        mlflow.sklearn.log_model(
+            best_model,
+            artifact_path=model_name,
+            registered_model_name=f"credit_risk_{model_name}"
+        )
 
         return {
             "model_name": model_name,
@@ -146,6 +150,7 @@ def main():
         results.append(result)
 
         best_result = max(results, key=lambda x: x["metrics"]["roc_auc"])
+        mlflow.set_tag("best_model", best_result["model_name"])
 
     os.makedirs("models", exist_ok=True)
 
