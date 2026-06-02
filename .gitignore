@@ -10,7 +10,6 @@ __pycache__/
 .env
 venv/
 .ipynb_checkpoints/
-"@ | Set-Content .gitignore
 mlruns/
 mlartifacts/
 mlflow.db
