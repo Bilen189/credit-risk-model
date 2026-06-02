@@ -1,4 +1,3 @@
-@"
 # Credit Risk Probability Model for Alternative Data
 
 ## Project Overview
