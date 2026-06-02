@@ -1,6 +1,8 @@
 import mlflow
 import mlflow.sklearn
 import pandas as pd
+import joblib
+import os
 
 from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, roc_auc_score
@@ -143,7 +145,14 @@ def main():
         )
         results.append(result)
 
-    best_result = max(results, key=lambda x: x["metrics"]["roc_auc"])
+        best_result = max(results, key=lambda x: x["metrics"]["roc_auc"])
+
+    os.makedirs("models", exist_ok=True)
+
+    joblib.dump(
+        best_result["best_model"],
+        "models/credit_risk_model.pkl"
+    )
 
     print("Best model:", best_result["model_name"])
     print("Best params:", best_result["best_params"])
