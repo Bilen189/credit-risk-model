@@ -4,6 +4,8 @@ import pandas as pd
 import joblib
 import os
 
+mlflow.end_run()
+
 from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, roc_auc_score
 from sklearn.linear_model import LogisticRegression
@@ -66,7 +68,8 @@ def train_and_log_model(model_name, model, params, X_train, X_test, y_train, y_t
         cv=3,
         n_jobs=-1
     )
-
+    if mlflow.active_run():
+        mlflow.end_run()
     with mlflow.start_run(run_name=model_name):
         grid_search.fit(X_train, y_train)
 
@@ -79,7 +82,11 @@ def train_and_log_model(model_name, model, params, X_train, X_test, y_train, y_t
 
         mlflow.log_params(grid_search.best_params_)
         mlflow.log_metrics(metrics)
-        mlflow.sklearn.log_model(best_model, artifact_path=model_name)
+        mlflow.sklearn.log_model(
+            best_model,
+            artifact_path=model_name,
+            registered_model_name=f"credit_risk_{model_name}"
+        )
 
         return {
             "model_name": model_name,
@@ -146,6 +153,7 @@ def main():
         results.append(result)
 
         best_result = max(results, key=lambda x: x["metrics"]["roc_auc"])
+        mlflow.set_tag("best_model", best_result["model_name"])
 
     os.makedirs("models", exist_ok=True)
 
